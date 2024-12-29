@@ -93,6 +93,8 @@ dependencies {
 
     // Image Loading
     implementation("io.coil-kt:coil:2.4.0")
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
 
     //Testing
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.0")
@@ -100,6 +102,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 
     testImplementation("io.mockk:mockk:1.12.0")
 }
