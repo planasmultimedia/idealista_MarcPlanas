@@ -30,7 +30,9 @@ class AdListFragment : Fragment(R.layout.fragment_list){
 
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
 
-        adapter = AdAdapter { ad -> }
+        adapter = AdAdapter { ad ->
+            findNavController().navigate(R.id.action_list_to_detail)
+        }
 
         recyclerView.adapter = adapter
 

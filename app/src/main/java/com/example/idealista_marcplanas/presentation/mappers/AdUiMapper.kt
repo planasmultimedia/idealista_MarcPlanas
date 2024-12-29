@@ -13,7 +13,7 @@ object AdUiMapper {
             id = ad.propertyCode,
             title = capitalizeFirstLetter(ad.propertyType) + " in " + capitalizeFirstLetter(ad.address),
             address = capitalizeFirstLetter(ad.neighborhood) + ", " + capitalizeFirstLetter(ad.municipality),
-            price = formatPrice(ad.priceInfo),
+            price = formatPrice(ad.priceInfo.price.amount, ad.priceInfo.price.currencySuffix),
             parkingInfo = if (ad.parkingSpace?.hasParkingSpace == true) "Parking included" else "",
             images = listOf(ad.thumbnail) + ad.multimedia.images.map { it.url },
             sizeInfo = "${ad.size} m2",
@@ -22,8 +22,8 @@ object AdUiMapper {
         )
     }
 
-    private fun formatPrice(info : PriceInfo): String {
+    fun formatPrice(amount: Double, suffix : String): String {
         val numberFormat = NumberFormat.getNumberInstance(Locale.getDefault())
-        return "${numberFormat.format(info.price.amount)} ${info.price.currencySuffix}"
+        return "${numberFormat.format(amount)} ${suffix}"
     }
 }
