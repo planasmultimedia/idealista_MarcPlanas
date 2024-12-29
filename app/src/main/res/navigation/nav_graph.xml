@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,5 +10,15 @@
         android:name="com.example.idealista_marcplanas.presentation.adsList.AdListFragment"
         android:label="Ad List"
         tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/detailFragment"/>
     </fragment>
+
+    <!-- Detail Fragment -->
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.idealista_marcplanas.presentation.adDetail.AdDetailFragment"
+        android:label="Ad Detail"
+        tools:layout="@layout/fragment_detail"/>
 </navigation>
