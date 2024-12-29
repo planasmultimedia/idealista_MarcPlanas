@@ -1,7 +1,9 @@
 package com.example.idealista_marcplanas.presentation.mappers
 
 import com.example.idealista_marcplanas.data.model.Ad
+import com.example.idealista_marcplanas.data.model.PriceInfo
 import com.example.idealista_marcplanas.presentation.uiModels.AdUiModel
+import com.example.idealista_marcplanas.utils.StringUtils.capitalizeFirstLetter
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -9,18 +11,19 @@ object AdUiMapper {
     fun mapToUiModel(ad: Ad): AdUiModel {
         return AdUiModel(
             id = ad.propertyCode,
-            address = formatAddress(ad.address),
-            price = formatPrice(ad.price),
-            thumbnail = ad.thumbnail
+            title = capitalizeFirstLetter(ad.propertyType) + " in " + capitalizeFirstLetter(ad.address),
+            address = capitalizeFirstLetter(ad.neighborhood) + ", " + capitalizeFirstLetter(ad.municipality),
+            price = formatPrice(ad.priceInfo),
+            parkingInfo = if (ad.parkingSpace?.hasParkingSpace == true) "Parking included" else "",
+            images = listOf(ad.thumbnail) + ad.multimedia.images.map { it.url },
+            sizeInfo = "${ad.size} m2",
+            operation = ad.operation,
+            roomInfo = "${ad.rooms} rooms",
         )
     }
 
-    private fun formatAddress(address: String): String {
-        return address.lowercase().replaceFirstChar { it.uppercase() }
-    }
-
-    private fun formatPrice(price: Double): String {
+    private fun formatPrice(info : PriceInfo): String {
         val numberFormat = NumberFormat.getNumberInstance(Locale.getDefault())
-        return "${numberFormat.format(price)} €"
+        return "${numberFormat.format(info.price.amount)} ${info.price.currencySuffix}"
     }
 }

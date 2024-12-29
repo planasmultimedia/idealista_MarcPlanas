@@ -11,31 +11,67 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <!-- Ad Thumbnail -->
-        <ImageView
-            android:id="@+id/thumbnailImageView"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/imageSlider"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="Ad Image"/>
+            android:layout_marginTop="16dp"/>
 
-        <!-- Ad Address -->
         <TextView
-            android:id="@+id/addressTextView"
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="16sp"
             android:paddingTop="4dp"/>
 
-        <!-- Ad Price -->
         <TextView
-            android:id="@+id/priceTextView"
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingTop="4dp"/>
+
+        <TextView
+            android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@android:color/holo_green_dark"
             android:paddingTop="2dp"/>
+
+        <TextView
+            android:id="@+id/parkingInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@android:color/holo_green_dark"
+            android:paddingTop="2dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/roomInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@android:color/holo_green_dark"
+                android:paddingTop="2dp"/>
+
+            <TextView
+                android:id="@+id/sizeInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@android:color/holo_green_dark"
+                android:paddingTop="2dp"
+                android:paddingStart="16dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

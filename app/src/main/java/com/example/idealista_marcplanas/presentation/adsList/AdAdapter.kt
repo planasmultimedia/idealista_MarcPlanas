@@ -3,13 +3,11 @@ package com.example.idealista_marcplanas.presentation.adsList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import androidx.viewpager2.widget.ViewPager2
 import com.example.idealista_marcplanas.R
-import com.example.idealista_marcplanas.data.model.Ad
 import com.example.idealista_marcplanas.presentation.uiModels.AdUiModel
 
 class AdAdapter(
@@ -17,19 +15,29 @@ class AdAdapter(
 ) : ListAdapter<AdUiModel, AdAdapter.AdViewHolder>(AdDiffCallback()) {
 
     inner class AdViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val thumbnailImageView: ImageView = itemView.findViewById(R.id.thumbnailImageView)
-        private val addressTextView: TextView = itemView.findViewById(R.id.addressTextView)
-        private val priceTextView: TextView = itemView.findViewById(R.id.priceTextView)
+        private val imageSlider: ViewPager2 = itemView.findViewById(R.id.imageSlider)
+        private val header: TextView = itemView.findViewById(R.id.header)
+        private val address: TextView = itemView.findViewById(R.id.address)
+        private val price: TextView = itemView.findViewById(R.id.price)
+        private val parkingInfo: TextView = itemView.findViewById(R.id.parkingInfo)
+        private val roomInfo: TextView = itemView.findViewById(R.id.roomInfo)
+        private val sizeInfo: TextView = itemView.findViewById(R.id.sizeInfo)
+        private val priceTextView: TextView = itemView.findViewById(R.id.price)
 
         fun bind(ad: AdUiModel) {
-
-            thumbnailImageView.load(ad.thumbnail) {
-                placeholder(R.drawable.placeholder_house)
-                error(R.drawable.error_image)
-            }
-
-            addressTextView.text = ad.address
+            imageSlider.adapter = SliderAdapter(ad.images)
+            header.text = ad.title
+            address.text = ad.address
+            price.text = ad.price
+            roomInfo.text = ad.roomInfo
+            sizeInfo.text = ad.sizeInfo
             priceTextView.text = ad.price
+
+            if (ad.parkingInfo.isEmpty()) {
+                parkingInfo.visibility = View.GONE
+            } else {
+                parkingInfo.text = ad.parkingInfo
+            }
 
             itemView.setOnClickListener {
                 onAdClicked(ad)
