@@ -1,64 +1,45 @@
 package com.example.idealista_marcplanas
 
 import com.example.idealista_marcplanas.data.model.Ad
-import com.example.idealista_marcplanas.data.model.Multimedia
-import com.example.idealista_marcplanas.data.model.Price
-import com.example.idealista_marcplanas.data.model.PriceInfo
 import com.example.idealista_marcplanas.presentation.mappers.AdUiMapper
-import com.example.idealista_marcplanas.presentation.mappers.AdUiMapper.formatPrice
 import com.example.idealista_marcplanas.presentation.uiModels.AdUiModel
+import com.example.idealista_marcplanas.utils.AdTestData
 import com.example.idealista_marcplanas.utils.StringUtils
-import io.mockk.confirmVerified
-import io.mockk.every
-import io.mockk.mockkObject
-import io.mockk.mockkStatic
-import io.mockk.unmockkAll
-import io.mockk.verify
-import junit.framework.TestCase.assertEquals
-import org.junit.Before
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
+import io.mockk.*
+import org.junit.jupiter.api.*
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AdUiMapperTest {
-
-    @BeforeEach
-    fun setup() {
-        mockkStatic(StringUtils::class)
-        every { formatPrice(1000.0, "€") } returns "1,000 €"
-        every { StringUtils.capitalizeFirstLetter("address") } returns "Address"
-    }
-
-    @AfterEach
-    fun tearDown() {
-        unmockkAll()
-    }
 
     @Test
     fun `mapToUiModel correctly maps Ad to AdUiModel`() {
-        val price = Price(amount = 1000.0, currencySuffix = "€")
-        val priceInfo = PriceInfo(price = price)
-        val ad = Ad(
-            propertyCode = "1",
+        val ad: Ad = AdTestData.createAdExample(
+            id = "1",
             propertyType = "apartment",
-            thumbnail = "thumbnail.jpg",
-            operation = "sale",
-            multimedia = Multimedia(images = emptyList()),
-            parkingSpace = null,
+            address = "address",
             neighborhood = "Downtown",
             municipality = "Cityville",
-            address = "address",
-            rooms = 2,
-            size = 100,
-            priceInfo = priceInfo
+            amount = 1000.0,
+            currency = "€"
         )
 
-        val result: AdUiModel = AdUiMapper.mapToUiModel(ad)
+        val dateFavorited: Long? = null
+
+        val result: AdUiModel = AdUiMapper.mapToUiModel(ad, dateFavorited)
 
         assertEquals("1", result.id)
+        assertEquals("Apartment in Address", result.title)
         assertEquals("Downtown, Cityville", result.address)
         assertEquals("1,000 €", result.price)
-        assertEquals("thumbnail.jpg", result.images[0])
+        assertEquals("Parking included", result.parkingInfo)
+        assertEquals(listOf("image1.jpg", "image2.jpg"), result.images)
+        assertEquals("120 m2", result.sizeInfo)
+        assertEquals("sale", result.operation)
+        assertEquals("3 rooms", result.roomInfo)
+        assertEquals(false, result.isFavorite)
+        assertEquals(null, result.favoritedAt)
+
     }
 }

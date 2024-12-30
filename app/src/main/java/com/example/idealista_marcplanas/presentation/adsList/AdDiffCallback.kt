@@ -12,4 +12,12 @@ class AdDiffCallback : DiffUtil.ItemCallback<AdUiModel>() {
     override fun areContentsTheSame(oldItem: AdUiModel, newItem: AdUiModel): Boolean {
         return oldItem == newItem
     }
+
+    override fun getChangePayload(oldItem: AdUiModel, newItem: AdUiModel): Any? {
+        return if (oldItem.isFavorite != newItem.isFavorite) {
+            "FAVORITE_UPDATE"
+        } else {
+            null
+        }
+    }
 }

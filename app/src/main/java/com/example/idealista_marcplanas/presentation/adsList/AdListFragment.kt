@@ -3,6 +3,7 @@ package com.example.idealista_marcplanas.presentation.adsList
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -30,9 +31,10 @@ class AdListFragment : Fragment(R.layout.fragment_list){
 
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
 
-        adapter = AdAdapter { ad ->
-            findNavController().navigate(R.id.action_list_to_detail)
-        }
+        adapter = AdAdapter (
+            {ad -> findNavController().navigate(R.id.action_list_to_detail)},
+            {ad -> viewModel.toggleFavorite(ad)}
+        )
 
         recyclerView.adapter = adapter
 

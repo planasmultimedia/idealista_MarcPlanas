@@ -9,7 +9,7 @@ import coil.load
 import com.example.idealista_marcplanas.R
 
 class SliderAdapter(
-    private val images: List<String>
+    private var images: List<String>
 ) : RecyclerView.Adapter<SliderAdapter.ImageViewHolder>() {
 
     class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -24,7 +24,11 @@ class SliderAdapter(
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         holder.imageView.load(images[position])
+    }
 
+    fun updateImages(newImages: List<String>) {
+        images = newImages
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = images.size
