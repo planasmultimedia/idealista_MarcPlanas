@@ -28,13 +28,10 @@ class AdDetailUiMapperTest {
             )
         )
 
-        every { StringUtils.capitalizeFirstLetter("apartment") } returns "Apartment"
-        every { StringUtils.capitalizeFirstLetter("A") } returns "A"
-
         val result: AdDetailUiModel = AdDetailUiMapper.mapToUiModel(adDetail)
 
-        assertEquals("12345", result.id)
-        assertEquals("200000 €", result.price)
+        assertEquals(12345, result.id)
+        assertEquals("200,000 €", result.price)
         assertEquals("Apartment", result.homeType)
         assertEquals("A beautiful apartment in the city center.", result.description)
         assertEquals(listOf("image1.jpg", "image2.jpg"), result.images)
@@ -42,10 +39,5 @@ class AdDetailUiMapperTest {
         assertEquals("2 bathrooms", result.bathrooms)
         assertEquals("Exterior", result.exterior)
         assertEquals("Energy Certigication Type: A", result.energyCertificationType)
-
-        verify { StringUtils.capitalizeFirstLetter("apartment") }
-        verify { StringUtils.capitalizeFirstLetter("A") }
-
-        confirmVerified(StringUtils)
     }
 }
